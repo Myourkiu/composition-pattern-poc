@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Esta é uma POC focada na utilização do conceito de Composition Pattern.
 
-## Getting Started
+## O que é Composition Pattern?
 
-First, run the development server:
+Como o nome já diz, é um padrão para a composição de componentes. Este conceito é utilizado na criação de componentes onde podem ser muito customizados. No exemplo deste projeto, peguei o exemplo de notificações, onde elas podem ter ou não textos, ações e ícones, além de ter o poder de customização de cada um deles. Este tipo de estrutura é utilizado por exemplo no RadixUI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+## Como funciona?
+
+Esta estrutura funciona de forma simples, dividindo o componente maior em partes. Neste exemplo, existia um componente maior Notification, que seria chamado da seguinte forma:
+
+```
+<Notication icon={Icon} text={Text} actions={Action1, Action2}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+À primeira vista, não parece nada de errado e realmente não tem, caso seja algo simples. Entretanto, caso este componente precisa ser chamado de formas diferentes, o código começará a ficar sujo e confuso, pois precisará de muitas condicionais e validações.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Um exemplo disso seria a notificação possuir apenas uma ação. Neste caso, teria de deixar as actions opcionais e adicionar a validação de cada uma das possibilidades. Já com este pattern, o código ficará mais maleável, onde precisaria apenas alterar o ícone da action e a função que seria executada.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Olhe o exemplo onde precisamos trazer uma notificação com um ícone apenas:
+```
+//Sem o pattern
 
-## Learn More
+interface NotificationProps{
+    (...)
+    icon1?: ElementType,
+    icon2?: ElementType,
+}
 
-To learn more about Next.js, take a look at the following resources:
+export function Notification({action1, action2, icon1, icon2} : NotificationProps){
+    //(...)
+    {
+        icon1 && {
+            <button>
+            {icon1}
+            </button>
+        }
+    }
+    {
+        icon2 && {
+            <button>
+            {icon2}
+            </button>
+        }
+    }
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    //chamando o componente
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    <Notification (...) icon1={icon1}/>
+}
+```
 
-## Deploy on Vercel
+Este foi um exemplo simples onde algo simples vira uma bola de neve. Agora veja como fica o código com o pattern aplicado:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+interface NotificationIconProps{
+    icon: ElementType
+}
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+export function NotificationIcon({icon: Icon} : NotificationIconProps){
+    return(
+        <Icon/>
+    )
+}
+
+//chamando o componente
+
+<Notification.Root>
+    <Notification.Icon icon={icon}>
+</Notification.Root>
+```
+
+## Conclusão
+
+O Composition Pattern pode ser um ótimo aliado a componentes versáteis, como notificações, modais, links de navbar e sidebar, etc. Ou seja, ele lida bem com componentes de base, que serão utilizados em muitos lugares e com muitas variações, pois te da a liberdade de criá-lo da forma necessária sem ficar adicionando várias linhas de código, facilitando a manutenção e escalabiliade do código.
