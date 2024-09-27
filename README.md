@@ -1,8 +1,12 @@
-Esta é uma POC focada na utilização do conceito de Composition Pattern.
+# Composition Pattern com Notificações
 
 ## O que é Composition Pattern?
 
-Como o nome já diz, é um padrão para a composição de componentes. Este conceito é utilizado na criação de componentes onde podem ser muito customizados. No exemplo deste projeto, peguei o exemplo de notificações, onde elas podem ter ou não textos, ações e ícones, além de ter o poder de customização de cada um deles. Este tipo de estrutura é utilizado por exemplo no RadixUI.
+O Composition Pattern é um padrão que facilita a criação de componentes flexíveis e altamente customizáveis. Ele permite compor um componente a partir de várias subpartes, em vez de lidar com um componente monolítico cheio de condições e validações.
+
+## Por que usar o Composition Pattern?
+
+Com o Composition Pattern, é possível construir componentes altamente modulares. Sem esse padrão, componentes grandes e complexos tendem a crescer em complexidade à medida que precisam ser ajustados para diferentes situações.
 
 ## Como funciona?
 
@@ -12,7 +16,7 @@ Esta estrutura funciona de forma simples, dividindo o componente maior em partes
 <Notication icon={Icon} text={Text} actions={Action1, Action2}
 ```
 
-À primeira vista, não parece nada de errado e realmente não tem, caso seja algo simples. Entretanto, caso este componente precisa ser chamado de formas diferentes, o código começará a ficar sujo e confuso, pois precisará de muitas condicionais e validações.
+À primeira vista, não parece nada de errado e realmente não tem, especialmente se o caso for simples. Entretanto, caso este componente precisa ser chamado de formas diferentes, o código começará a ficar sujo e confuso, pois precisará de muitas condicionais e validações.
 
 Um exemplo disso seria a notificação possuir apenas uma ação. Neste caso, teria de deixar as actions opcionais e adicionar a validação de cada uma das possibilidades. Já com este pattern, o código ficará mais maleável, onde precisaria apenas alterar o ícone da action e a função que seria executada.
 
