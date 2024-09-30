@@ -13,7 +13,7 @@ Com o Composition Pattern, é possível construir componentes altamente modulare
 Esta estrutura funciona de forma simples, dividindo o componente maior em partes. Neste exemplo, existia um componente maior Notification, que seria chamado da seguinte forma:
 
 ```
-<Notication icon={Icon} text={Text} actions={Action1, Action2}/>
+<Notification icon={Icon} text={Text} actions={Action1, Action2}/>
 ```
 
 À primeira vista, não parece nada de errado e realmente não tem, especialmente se o caso for simples. Entretanto, caso este componente precisa ser chamado de formas diferentes, o código começará a ficar sujo e confuso, pois precisará de muitas condicionais e validações.
